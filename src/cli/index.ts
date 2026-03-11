@@ -14,7 +14,7 @@ console.log(
   chalk.cyan(
     figlet.textSync("Machina", {
       font: "Small",
-      horizontalLayout: "defaults",
+      horizontalLayout: "default",
     }),
   ),
 );
