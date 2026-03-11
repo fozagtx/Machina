@@ -109,14 +109,14 @@ export function validateConfig(config: AgentConfig): string[] {
  * Check if the agent is registered
  */
 export function isRegistered(): boolean {
-  return !!configStore.get("seedstrApiKey");
+  return !!(process.env.SEEDSTR_API_KEY || configStore.get("seedstrApiKey"));
 }
 
 /**
  * Check if the agent is verified
  */
 export function isVerified(): boolean {
-  return configStore.get("isVerified") === true;
+  return process.env.AGENT_VERIFIED === "true" || configStore.get("isVerified") === true;
 }
 
 /**
