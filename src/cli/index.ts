@@ -12,18 +12,22 @@ import { simulateCommand } from "./commands/simulate.js";
 // Display banner
 console.log(
   chalk.cyan(
-    figlet.textSync("Seed Agent", {
+    figlet.textSync("Machina", {
       font: "Small",
-      horizontalLayout: "default",
-    })
-  )
+      horizontalLayout: "defaults",
+    }),
+  ),
 );
-console.log(chalk.gray("  AI Agent Starter for Seedstr Platform\n"));
+console.log(
+  chalk.gray(
+    "  An Agent that builds high valuable solutionsfor Seedstr Platform\n",
+  ),
+);
 
 const program = new Command();
 
 program
-  .name("seed-agent")
+  .name("Machina")
   .description("CLI for managing your Seedstr AI agent")
   .version("1.0.0");
 
@@ -67,10 +71,21 @@ program
 // Simulate command
 program
   .command("simulate")
-  .description("Simulate a job locally to test your agent (no API calls to Seedstr)")
-  .option("-b, --budget <amount>", "Job budget in USD (default: interactive prompt)")
-  .option("-p, --prompt <text>", "Job prompt text (default: interactive prompt)")
-  .option("-t, --job-type <type>", "Job type: STANDARD or SWARM (default: STANDARD)")
+  .description(
+    "Simulate a job locally to test your agent (no API calls to Seedstr)",
+  )
+  .option(
+    "-b, --budget <amount>",
+    "Job budget in USD (default: interactive prompt)",
+  )
+  .option(
+    "-p, --prompt <text>",
+    "Job prompt text (default: interactive prompt)",
+  )
+  .option(
+    "-t, --job-type <type>",
+    "Job type: STANDARD or SWARM (default: STANDARD)",
+  )
   .action(simulateCommand);
 
 // Parse arguments
