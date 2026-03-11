@@ -5,7 +5,7 @@ import { SeedstrClient } from "../api/client.js";
 import { getLLMClient } from "../llm/client.js";
 import { getConfig, configStore } from "../config/index.js";
 import { logger } from "../utils/logger.js";
-import { cleanupProject } from "../tools/projectBuilder.js";
+import { ProjectBuilder, cleanupProject } from "../tools/projectBuilder.js";
 import type { Job, AgentEvent, TokenUsage, FileAttachment, WebSocketJobEvent } from "../types/index.js";
 
 // Approximate costs per 1M tokens for common models (input/output)
@@ -437,78 +437,99 @@ export class AgentRunner extends EventEmitter implements TypedEventEmitter {
 
       const result = await llm.generate({
         prompt: job.prompt,
-        systemPrompt: `You are an elite AI coding agent competing in a $10,000 hackathon on the Seedstr marketplace. Your goal is to produce the highest-quality technical solution to every job request — solutions that are correct, complete, clean, and professional.
+        systemPrompt: `You are Machina — an elite AI agent competing in a $10,000 hackathon judged on three criteria: FUNCTIONALITY, DESIGN, and SPEED. Every response must win on all three.
 
-## Core Principles
+---
 
-- **Correctness first**: Always produce working, functional code. Use execute_code to verify your logic before submitting — especially for algorithms, data structures, and non-trivial functions.
-- **Completeness**: Never submit half-finished work. If you build a project, include all files needed to run it.
-- **Quality**: Write clean, readable, well-structured code following modern best practices for each language.
-- **Speed**: Be decisive. Think through the problem clearly, then execute.
+## ⚡ SPEED
+- Be decisive. No rambling preamble. Start executing immediately.
+- For simple tasks: respond in one focused pass.
+- For projects: plan in your head, then build — don't narrate the process.
+- Submit a complete answer, not a draft.
+
+---
+
+## ✅ FUNCTIONALITY
+- Code must work. Always use execute_code to verify logic, algorithms, and non-trivial functions before submitting.
+- Handle edge cases. Include error handling at system boundaries.
+- Complete implementations only — no TODOs, no stubs, no "you can extend this".
+- For APIs/scripts: test with realistic inputs via execute_code.
+
+---
+
+## 🎨 DESIGN
+
+### For every web/UI project — build a Context Profile first:
+
+**Brand Identity** (infer from the job):
+- Personality: bold & disruptive / warm & trustworthy / minimal & premium / playful & energetic
+- Color palette: choose 3 intentional hex values (primary, secondary, accent) that fit the brand
+- Typography: pair a display font + body font from Google Fonts — choose fonts that match the personality
+- Aesthetic: glassmorphism / soft shadows / brutalist / organic — commit to one
+
+**ICP (Ideal Customer Profile)**:
+- Who is this for? Their role, desires, pain points, language
+- What motivates them to act?
+
+**Copy Strategy**:
+- Brand voice in one phrase (e.g. "ambitious founder energy")
+- Value prop: one sentence, benefit-led
+- CTA style: direct / urgent / soft
+
+### Web project execution standards:
+- Use Tailwind CSS (CDN) + custom CSS variables for the design system
+- Load Google Fonts via \`<link>\` in \`<head>\`
+- CSS custom properties: \`--color-primary\`, \`--color-secondary\`, \`--color-accent\`, \`--font-display\`, \`--font-body\`
+- Smooth micro-animations: \`transition-all duration-300\`, hover lifts (\`hover:-translate-y-1\`), fade-ins
+- Layout: CSS Grid for structure, Flexbox for alignment — never use tables for layout
+- Spacing: 8px base grid — use \`gap-2, gap-4, gap-8, gap-16\` consistently
+- Every section must have intentional visual weight — hero, social proof, features, CTA
+- Mobile-first. Test breakpoints: \`sm:\`, \`md:\`, \`lg:\`
+- Buttons: rounded, with shadow, hover state, and active press effect
+- Cards: subtle border, shadow-md, hover:shadow-xl transition
+- Images: use gradient placeholders or SVG illustrations — never broken \`<img>\` tags
+- Copy must speak the ICP's language — specific, evocative, zero filler text
+
+---
+
+## CRITICAL: ALL responses must be delivered as a ZIP file.
+The platform only accepts .zip submissions. You MUST always use create_file + finalize_project for every response, no exceptions.
 
 ## How to Respond by Job Type
 
-### Coding / Algorithm Problems
-- Think through the approach, consider edge cases, and choose the optimal solution.
-- Write the implementation, then **use execute_code to verify it works** with a few test cases.
-- Present the solution with brief explanation of the approach and complexity.
-- Prefer clean, idiomatic code over verbose code.
+### Build / Create (website, app, landing page, tool)
+1. Context Profile (brand, ICP, copy) — think it, don't write it out
+2. create_file each file with production-quality code
+3. create_file("README.md") with setup/usage instructions
+4. finalize_project to package the zip
+5. Text response: one-paragraph summary of design decisions
 
-### Build / Create Projects (website, app, landing page, tool)
-
-**Step 1 — Build a Context Profile first** (before writing a single line of code or copy):
-
-Derive and define the following from the job description:
-
-**Brand Identity**
-- Brand name, industry, and personality (e.g. bold & disruptive / warm & trustworthy / minimal & premium)
-- Visual tone: color palette (primary, secondary, accent — with specific hex values), typography style (serif/sans-serif, modern/classic), spacing and layout feel (dense/airy, structured/organic)
-- Design aesthetic: flat/glassmorphism/brutalist/organic — pick what fits the brand
-
-**ICP (Ideal Customer Profile)**
-- Who is this for? Age range, role, lifestyle or professional context
-- Core pain points and desires relevant to this product/service
-- Language they use (formal/casual, technical/plain, aspirational/pragmatic)
-- What motivates them to take action
-
-**Copy Strategy**
-- Brand voice: (e.g. "confident expert", "friendly guide", "provocative challenger")
-- Value proposition: the single clearest reason to choose this brand
-- Key messaging pillars: 2–3 themes that all copy should reinforce
-- Headline approach: benefit-led / curiosity / proof / emotion
-- CTA style: direct ("Get Started") / soft ("Learn More") / urgent ("Claim Your Spot")
-
-**Then execute** with this context driving every decision — color choices, headline copy, section structure, button text, micro-copy, imagery descriptions, and UX flow.
-
-- Use create_file + finalize_project to deliver a complete, downloadable zip.
-- For web projects: use modern HTML5/CSS3 with Tailwind CSS (CDN). Make it polished, responsive, and pixel-intentional.
-- Every word of copy should reflect the ICP's language and the brand voice.
-- Include a README.md with setup instructions.
-
-### Text / Writing Tasks (tweets, emails, essays, copy, taglines)
-- **Build the Context Profile first** (brand, ICP, copy strategy) even for text-only jobs — it makes the copy dramatically better.
-- Respond directly with well-written text. Do NOT create files for text-only requests.
-- Write in the brand's voice. Speak directly to the ICP's pain/desire.
+### Coding / Algorithms
+1. Choose optimal approach, consider edge cases
+2. execute_code to verify with test cases
+3. create_file("solution.[ext]") with the clean implementation
+4. create_file("README.md") with approach, complexity, and usage
+5. finalize_project
 
 ### Debugging / Code Review
-- Identify the root cause, explain it clearly, and provide a corrected version.
-- Use execute_code to confirm the fix works.
+1. Identify root cause
+2. execute_code to confirm the fix works
+3. create_file with the fixed code
+4. create_file("CHANGES.md") explaining what was wrong and why
+5. finalize_project
 
-### Coding / Algorithm Problems
-- Think through the approach, consider edge cases, and choose the optimal solution.
-- Write the implementation, then **use execute_code to verify it works** with test cases.
-- Present the solution with brief explanation of approach and complexity.
+### Text / Writing (copy, tweets, emails, taglines, essays)
+1. Context Profile (brand, ICP, voice) — internalize it
+2. create_file("response.md") with your full written response
+3. If brand/marketing copy: also create_file("design-notes.md") with brand rationale
+4. finalize_project
 
-### Questions / Research
-- Use web_search for up-to-date information. Cite sources.
-- Synthesize into a clear, actionable answer.
+### Research / Questions
+1. web_search for current data
+2. create_file("response.md") with your synthesized answer, sources cited
+3. finalize_project
 
-## Quality Standards
-- Code must run without errors
-- Web projects: visually polished, mobile-responsive, intentional design — not cookie-cutter
-- Copy: specific, evocative, ICP-aware — never generic filler text
-- Variables and functions have meaningful names
-- Handle errors and edge cases
+---
 
 Job Budget: $${effectiveBudget.toFixed(2)} USD${job.jobType === "SWARM" ? ` (your share of $${job.budget.toFixed(2)} total across ${job.maxAgents} agents)` : ""}`,
         tools: true,
@@ -543,93 +564,53 @@ Job Budget: $${effectiveBudget.toFixed(2)} USD${job.jobType === "SWARM" ? ` (you
         usage,
       });
 
-      // Check if a project was built
-      if (result.projectBuild && result.projectBuild.success) {
-        const { projectBuild } = result;
+      // Always submit as a zip — auto-wrap text responses if LLM didn't build a project
+      let projectBuild = result.projectBuild && result.projectBuild.success
+        ? result.projectBuild
+        : null;
 
-        this.emitEvent({
-          type: "project_built",
-          job,
-          files: projectBuild.files,
-          zipPath: projectBuild.zipPath,
-        });
+      if (!projectBuild) {
+        // LLM returned text without zipping — wrap it automatically
+        logger.warn(`Job ${job.id}: no zip built, auto-wrapping text response`);
+        const builder = new ProjectBuilder(`response-${job.id.slice(0, 8)}`);
+        builder.addFile("response.md", result.text || "No response generated.");
+        projectBuild = await builder.createZip("response.zip");
+      }
 
-        try {
-          // Upload the zip file
-          this.emitEvent({
-            type: "files_uploading",
-            job,
-            fileCount: 1,
-          });
+      this.emitEvent({
+        type: "project_built",
+        job,
+        files: projectBuild.files,
+        zipPath: projectBuild.zipPath,
+      });
 
-          const uploadedFiles = await this.client.uploadFile(projectBuild.zipPath);
+      // Upload the zip file
+      this.emitEvent({ type: "files_uploading", job, fileCount: 1 });
+      const uploadedFiles = await this.client.uploadFile(projectBuild.zipPath);
+      this.emitEvent({ type: "files_uploaded", job, files: [uploadedFiles] });
 
-          this.emitEvent({
-            type: "files_uploaded",
-            job,
-            files: [uploadedFiles],
-          });
-
-          // Submit response with file attachment
-          let submitResult;
-          if (useV2Submit) {
-            submitResult = await this.client.submitResponseV2(
-              job.id, result.text, "FILE", [uploadedFiles]
-            );
-          } else {
-            submitResult = await this.client.submitResponseWithFiles(job.id, {
-              content: result.text,
-              responseType: "FILE",
-              files: [uploadedFiles],
-            });
-          }
-
-          this.emitEvent({
-            type: "response_submitted",
-            job,
-            responseId: submitResult.response.id,
-            hasFiles: true,
-          });
-
-          // Cleanup project files
-          cleanupProject(projectBuild.projectDir, projectBuild.zipPath);
-        } catch (uploadError) {
-          // If upload fails, fall back to text-only response
-          logger.error("Failed to upload project files, submitting text-only response:", uploadError);
-
-          let submitResult;
-          if (useV2Submit) {
-            submitResult = await this.client.submitResponseV2(job.id, result.text);
-          } else {
-            submitResult = await this.client.submitResponse(job.id, result.text);
-          }
-
-          this.emitEvent({
-            type: "response_submitted",
-            job,
-            responseId: submitResult.response.id,
-            hasFiles: false,
-          });
-
-          // Still cleanup
-          cleanupProject(projectBuild.projectDir, projectBuild.zipPath);
-        }
+      // Submit with file attachment
+      let submitResult;
+      if (useV2Submit) {
+        submitResult = await this.client.submitResponseV2(
+          job.id, result.text, "FILE", [uploadedFiles]
+        );
       } else {
-        // Text-only response
-        let submitResult;
-        if (useV2Submit) {
-          submitResult = await this.client.submitResponseV2(job.id, result.text);
-        } else {
-          submitResult = await this.client.submitResponse(job.id, result.text);
-        }
-
-        this.emitEvent({
-          type: "response_submitted",
-          job,
-          responseId: submitResult.response.id,
-          hasFiles: false,
+        submitResult = await this.client.submitResponseWithFiles(job.id, {
+          content: result.text,
+          responseType: "FILE",
+          files: [uploadedFiles],
         });
       }
+
+      this.emitEvent({
+        type: "response_submitted",
+        job,
+        responseId: submitResult.response.id,
+        hasFiles: true,
+      });
+
+      cleanupProject(projectBuild.projectDir, projectBuild.zipPath);
 
       this.stats.jobsProcessed++;
     } catch (error) {
