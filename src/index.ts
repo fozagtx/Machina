@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /**
  * Seed Agent - AI Agent Starter for Seedstr Platform
  *
