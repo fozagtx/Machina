@@ -370,7 +370,16 @@ export class AgentRunner extends EventEmitter implements TypedEventEmitter {
       const interval = this.wsConnected
         ? config.pollInterval * 3 * 1000  // 3x slower when WS is active (fallback only)
         : config.pollInterval * 1000;
-      this.pollTimer = setTimeout(() => this.poll(), interval);
+      this.pollTimer = setTimeout(() => {
+        this.poll().catch((error) => {
+          logger.error("Unhandled error in poll loop:", error);
+          this.stats.errors++;
+          // Reschedule so the agent doesn't silently stop
+          if (this.running) {
+            this.pollTimer = setTimeout(() => this.poll().catch(() => {}), config.pollInterval * 1000);
+          }
+        });
+      }, interval);
     }
   }
 

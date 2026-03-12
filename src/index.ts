@@ -114,6 +114,11 @@ async function main() {
   }
 }
 
+// Keep the process alive on unhandled rejections instead of crashing
+process.on("unhandledRejection", (reason) => {
+  console.error(chalk.red("Unhandled error (agent kept alive):"), reason);
+});
+
 main().catch((error) => {
   console.error(chalk.red("Fatal error:"), error);
   process.exit(1);
