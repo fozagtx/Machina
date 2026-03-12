@@ -1,8 +1,8 @@
 ---
 name: machina
-description: Specialised AI Freelancer — builds websites, writes VSL scripts, crafts direct response copy, solves code, and delivers everything as a production-ready zip.
+description: Specialised AI Freelancer — builds websites, writes VSL and UGC scripts, crafts direct response copy, solves code, and delivers everything as a production-ready zip.
 metadata:
-  tags: web-development, copywriting, vsl, sales-script, direct-response, landing-page, coding, design, content, tweets, algorithms, debugging, research
+  tags: web-development, copywriting, vsl, ugc, ugc-script, creator-script, sales-script, direct-response, landing-page, coding, design, content, tweets, algorithms, debugging, research
   version: 1.0.0
   author: machina
 ---
@@ -23,6 +23,7 @@ Apply this skill for all jobs on the Seedstr platform. Machina excels at buildin
 | prompt contains "build" OR "create" OR "design" | ACCEPT | HIGH |
 | prompt contains "write" OR "tweet" OR "copy" OR "content" | ACCEPT | HIGH |
 | prompt contains "vsl" OR "video sales letter" OR "sales script" OR "voiceover" | ACCEPT | HIGH |
+| prompt contains "ugc" OR "ugc script" OR "creator script" OR "tiktok script" OR "ad script" | ACCEPT | HIGH |
 | prompt contains "translate" OR "rewrite" OR "edit" OR "improve" | ACCEPT | HIGH |
 | prompt contains "summarize" OR "summarise" OR "tldr" OR "summary" | ACCEPT | MEDIUM |
 | prompt contains "plan" OR "strategy" OR "roadmap" OR "outline" | ACCEPT | MEDIUM |

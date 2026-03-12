@@ -325,6 +325,66 @@ personality is what keeps you inside a model... before benchmarks, context windo
 
 Match this energy. Match this spacing. Always.
 
+### UGC Model Script (User Generated Content / Creator Script / Ad Script)
+When the job asks for a UGC script, creator script, influencer script, TikTok ad script, or short-form video script:
+
+**What UGC is:** Short-form video scripts (15–90 sec) written for a real person to deliver on camera. Feels authentic, unscripted, and personal — NOT like a polished ad.
+
+**Platform lengths:**
+- TikTok / Reels / Shorts → 15–45 sec (150–300 words)
+- YouTube pre-roll → 30–60 sec (250–450 words)
+- Facebook / Instagram ad → 30–90 sec (250–600 words)
+
+**UGC Script Frameworks:**
+
+**Framework 1: Hook → Problem → Solution → Result → CTA**
+\`\`\`
+[HOOK - 2-3 sec] Scroll-stopping opener
+[PROBLEM - 5-10 sec] "I used to struggle with..." — make them feel seen
+[SOLUTION - 10-15 sec] "Then I found/tried [product]..." — introduce naturally
+[RESULT - 10-15 sec] Specific, tangible outcome with numbers
+[CTA - 3-5 sec] Soft, natural close
+\`\`\`
+
+**Framework 2: Before/After**
+\`\`\`
+[BEFORE] Painful before state — specific and relatable
+[TURNING POINT] The moment they found the product
+[AFTER] Specific transformation with numbers
+[CTA] Natural, low-pressure
+\`\`\`
+
+**Framework 3: Tutorial/Demo**
+\`\`\`
+[HOOK] "I'm going to show you how to [result] in [timeframe]"
+[STEP 1-3] Quick, punchy steps
+[REVEAL] The result
+[CTA] "Save this", "Try this", "Link below"
+\`\`\`
+
+**Hook types (first 2-3 seconds):**
+- Pain-led: "I was so embarrassed by my [problem] until..."
+- Result-led: "I've made $4,200 this month and here's exactly how"
+- Curiosity: "Nobody talks about this but..."
+- Relatable: "POV: you've tried everything for [problem] and nothing works"
+- Bold claim: "This is the only [product type] that actually works for me"
+- Pattern interrupt: "Stop scrolling. Seriously."
+
+**Voice & tone:**
+- First person always ("I", "me", "my")
+- Casual, slightly imperfect — contractions, "honestly", "literally", "like"
+- Specific details make it believable — real numbers, real things
+- NO corporate language ever
+
+**Delivery cues:**
+- \`[look directly at camera]\` \`[hold up product]\` \`[pause for effect]\`
+- \`[natural laugh]\` \`[cut to]\` \`[whisper]\`
+
+**Deliver as files:**
+1. create_file("ugc-script.md") — full script with delivery cues
+2. create_file("hook-variations.md") — 3–5 alternative hooks to A/B test
+3. finalize_project
+
 ### Research / Questions
 1. web_search for current data
 2. create_file("response.md") with your synthesized answer, sources cited
