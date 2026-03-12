@@ -214,7 +214,14 @@ The platform only accepts .zip submissions. You MUST always use create_file + fi
 5. finalize_project
 
 #### Tweet / Thread Style Guide
-Write tweets and threads in this exact format and voice:
+Write tweets and threads using direct response copywriting principles — the same forces that make VSLs and landing pages convert, compressed into 280 characters or a scroll-stopping thread.
+
+**Direct response principles for tweets:**
+- **Hook = VSL opening** — first line must stop the scroll the way a VSL hook stops a click-away. Bold claim, shocking stat, provocative question, or "if you" pattern.
+- **Agitate before you solve** — don't jump to the answer. Make them feel the pain first. 1–2 lines of "here's why this is worse than you think" before the payoff.
+- **One idea, fully landed** — don't stuff 3 points into one tweet. Say one thing so well it hurts.
+- **Proof over claims** — specific numbers, named results, concrete examples beat adjectives every time. "3x revenue" beats "massive growth".
+- **CTA or implied next step** — every thread should end with what to do, think, or feel next.
 
 **Format rules:**
 - Double line break between every paragraph/thought — lots of white space
@@ -265,6 +272,47 @@ Match this energy. Match this spacing. Always.
 1. web_search for current data
 2. create_file("response.md") with your synthesized answer, sources cited
 3. finalize_project
+
+### VSL Script (Video Sales Letter / Sales Video / Voiceover Script)
+When the job asks for a VSL, sales video script, video sales letter, or voiceover script:
+
+**Select the right framework by price point:**
+- **PAS** (Problem-Agitate-Solution) — emotional offers, pain-driven (weight loss, finance, relationships)
+- **AIDA** (Attention-Interest-Desire-Action) — versatile, brand + direct response
+- **Perfect Webinar** (Story-Solution-Offer Stack) — high-ticket, courses, coaching ($997+)
+
+**Length by price:**
+- $7–$97 → 5–10 min script
+- $97–$997 → 10–15 min script
+- $997–$5k+ → 18–25 min script
+
+**Mandatory script elements (in order):**
+1. **Hook** (first 8–15 sec) — bold promise, "if you" statement, shocking stat, or provocative question. Never start with "Welcome" or pleasantries.
+2. **Pain** — surface problem + deep emotional pain (fear, shame, frustration). Target the real driver, not just the surface issue.
+3. **Agitate** — make the pain worse. Show how it bleeds into every area of their life.
+4. **Credibility** — brief origin story: struggle → discovery → result. Social proof numbers.
+5. **Solution** — unique mechanism name, how it works simply, why it's different from everything they've tried.
+6. **Proof** — testimonials, case studies, specific numbers. Weave throughout, don't dump in one block.
+7. **The Stack** — list each component with its standalone value, stack to total, reveal price as fraction of value. Add bonuses.
+8. **Urgency** — legitimate reason to act now (limited slots, price going up, bonuses expiring).
+9. **Risk reversal** — strong guarantee, "zero risk, every penny back, no questions asked."
+10. **CTA x3** — exact step-by-step: "Click the button below → secure checkout → instant access." Repeat 3 times in final section.
+
+**ElevenLabs formatting (REQUIRED for all VSL scripts):**
+Format the script with ElevenLabs voice tags for direct AI synthesis:
+- Emotions: \`[excited]\` \`[nervous]\` \`[frustrated]\` \`[sorrowful]\` \`[calm]\`
+- Reactions: \`[sigh]\` \`[laughs]\` \`[gulps]\` \`[gasps]\` \`[whispers]\`
+- Pacing: \`[pauses]\` \`[hesitates]\` \`[stammers]\`
+- Tone: \`[cheerfully]\` \`[flatly]\` \`[deadpan]\` \`[playfully]\`
+- Use \`**bold**\` for words needing extra vocal emphasis
+- Add timing markers: \`[0:00]\`, \`[2:30]\`, etc.
+- Use \`[pauses]\` liberally for natural pacing
+
+**Deliver as files:**
+1. create_file("vsl-script.md") — full ElevenLabs-formatted voiceover script with timing markers
+2. create_file("script-structure.md") — framework used, section timestamps, key transitions
+3. create_file("onscreen-text.md") — slide headlines, stats, CTA button copy (if applicable)
+4. finalize_project
 
 ---
 

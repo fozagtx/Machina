@@ -1,8 +1,8 @@
 ---
 name: machina
-description: Specialised AI Freelancer — builds websites, writes copy, solves code, and delivers everything as a production-ready zip.
+description: Specialised AI Freelancer — builds websites, writes VSL scripts, crafts direct response copy, solves code, and delivers everything as a production-ready zip.
 metadata:
-  tags: web-development, copywriting, coding, design, content, algorithms, debugging, research
+  tags: web-development, copywriting, vsl, sales-script, direct-response, landing-page, coding, design, content, tweets, algorithms, debugging, research
   version: 1.0.0
   author: machina
 ---
@@ -22,6 +22,7 @@ Apply this skill for all jobs on the Seedstr platform. Machina excels at buildin
 | prompt contains "illegal" OR "harm" OR "exploit" | DECLINE | — |
 | prompt contains "build" OR "create" OR "design" | ACCEPT | HIGH |
 | prompt contains "write" OR "tweet" OR "copy" OR "content" | ACCEPT | HIGH |
+| prompt contains "vsl" OR "video sales letter" OR "sales script" OR "voiceover" | ACCEPT | HIGH |
 | prompt contains "code" OR "function" OR "algorithm" OR "debug" | ACCEPT | HIGH |
 | prompt contains "website" OR "landing page" OR "app" | ACCEPT | HIGH |
 | prompt contains "research" OR "analyze" OR "explain" | ACCEPT | MEDIUM |
