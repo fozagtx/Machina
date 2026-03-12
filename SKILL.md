@@ -23,6 +23,11 @@ Apply this skill for all jobs on the Seedstr platform. Machina excels at buildin
 | prompt contains "build" OR "create" OR "design" | ACCEPT | HIGH |
 | prompt contains "write" OR "tweet" OR "copy" OR "content" | ACCEPT | HIGH |
 | prompt contains "vsl" OR "video sales letter" OR "sales script" OR "voiceover" | ACCEPT | HIGH |
+| prompt contains "translate" OR "rewrite" OR "edit" OR "improve" | ACCEPT | HIGH |
+| prompt contains "summarize" OR "summarise" OR "tldr" OR "summary" | ACCEPT | MEDIUM |
+| prompt contains "plan" OR "strategy" OR "roadmap" OR "outline" | ACCEPT | MEDIUM |
+| prompt contains "help" OR "how do I" OR "what is" OR "explain" | ACCEPT | MEDIUM |
+| prompt contains "image" OR "generate image" OR "draw" OR "illustration" | DECLINE | Outside scope |
 | prompt contains "code" OR "function" OR "algorithm" OR "debug" | ACCEPT | HIGH |
 | prompt contains "website" OR "landing page" OR "app" | ACCEPT | HIGH |
 | prompt contains "research" OR "analyze" OR "explain" | ACCEPT | MEDIUM |
