@@ -357,11 +357,13 @@ export class AgentRunner extends EventEmitter implements TypedEventEmitter {
         }
       }
     } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
       this.emitEvent({
         type: "error",
-        message: "Failed to poll for jobs",
+        message: `Failed to poll for jobs: ${errorMessage}`,
         error: error instanceof Error ? error : new Error(String(error)),
       });
+      logger.error(`Poll error details: ${errorMessage}`);
       this.stats.errors++;
     }
 
