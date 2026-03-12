@@ -378,7 +378,9 @@ export class AgentRunner extends EventEmitter implements TypedEventEmitter {
           this.stats.errors++;
           // Reschedule so the agent doesn't silently stop
           if (this.running) {
-            this.pollTimer = setTimeout(() => this.poll().catch(() => {}), config.pollInterval * 1000);
+            this.pollTimer = setTimeout(() => this.poll().catch((e) => {
+              logger.error("Poll recovery failed:", e);
+            }), config.pollInterval * 1000);
           }
         });
       }, interval);
@@ -436,6 +438,9 @@ export class AgentRunner extends EventEmitter implements TypedEventEmitter {
   private async processJob(job: Job, useV2Submit = false): Promise<void> {
     this.processingJobs.add(job.id);
     this.emitEvent({ type: "job_processing", job });
+
+    let projectDir: string | null = null;
+    let zipPath: string | null = null;
 
     try {
       // Generate response using LLM
@@ -870,6 +875,9 @@ Job Budget: $${effectiveBudget.toFixed(2)} USD${job.jobType === "SWARM" ? ` (you
         projectBuild = await builder.createZip("response.zip");
       }
 
+      projectDir = projectBuild.projectDir;
+      zipPath = projectBuild.zipPath;
+
       this.emitEvent({
         type: "project_built",
         job,
@@ -908,6 +916,11 @@ Job Budget: $${effectiveBudget.toFixed(2)} USD${job.jobType === "SWARM" ? ` (you
       this.stats.jobsProcessed++;
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error);
+
+      // Clean up temp files on error
+      if (projectDir) {
+        cleanupProject(projectDir, zipPath || undefined);
+      }
 
       // Handle "already submitted" error gracefully - not really an error
       if (errorMessage.includes("already submitted")) {

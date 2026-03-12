@@ -45,13 +45,14 @@ export interface LLMResponse {
   projectBuild?: ProjectBuildResult;
 }
 
-// Active project builder instance (one per generation)
-// Using a type assertion to work around TypeScript narrowing issues
-let activeProjectBuilder: ProjectBuilder | null = null;
+// Per-generation project builder, keyed by generation ID to avoid
+// concurrent jobs overwriting each other's builder state.
+const activeBuilders = new Map<string, ProjectBuilder>();
+let currentGenerationId: string | null = null;
 
-// Helper to get the project builder with correct typing
 function getActiveBuilder(): ProjectBuilder | null {
-  return activeProjectBuilder;
+  if (!currentGenerationId) return null;
+  return activeBuilders.get(currentGenerationId) || null;
 }
 
 /**
@@ -267,14 +268,16 @@ export class LLMClient {
         execute: async ({ path, content }) => {
           logger.tool("create_file", "start", `Creating: ${path}`);
           try {
-            // Initialize project builder if not exists
-            if (!activeProjectBuilder) {
-              activeProjectBuilder = new ProjectBuilder();
+            // Initialize project builder if not exists for this generation
+            const genId = currentGenerationId!;
+            if (!activeBuilders.has(genId)) {
+              activeBuilders.set(genId, new ProjectBuilder());
             }
-            
-            activeProjectBuilder.addFile(path, content);
-            
-            const files = activeProjectBuilder.getFiles();
+            const builder = activeBuilders.get(genId)!;
+
+            builder.addFile(path, content);
+
+            const files = builder.getFiles();
             logger.tool("create_file", "success", `Created ${path}, total files: ${files.length}`);
             
             return {
@@ -301,11 +304,12 @@ export class LLMClient {
         execute: async ({ projectName }) => {
           logger.tool("finalize_project", "start", `Finalizing: ${projectName}`);
           try {
-            if (!activeProjectBuilder) {
+            const builder = getActiveBuilder();
+            if (!builder) {
               throw new Error("No files have been created. Use create_file first.");
             }
-            
-            const result = await activeProjectBuilder.createZip(`${projectName}.zip`);
+
+            const result = await builder.createZip(`${projectName}.zip`);
             logger.tool("finalize_project", "success", `Created ${result.zipPath} (${result.totalSize} bytes)`);
             
             return {
@@ -341,8 +345,10 @@ export class LLMClient {
 
     logger.debug(`Generating response with model: ${this.model}`);
 
-    // Reset project builder for each generation
-    activeProjectBuilder = null;
+    // Create a unique ID for this generation to isolate concurrent jobs
+    const generationId = `gen-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+    currentGenerationId = generationId;
+    activeBuilders.delete(generationId);
 
     const tools = enableTools ? this.getTools() : undefined;
     const hasTools = tools && Object.keys(tools).length > 0;
@@ -374,7 +380,7 @@ export class LLMClient {
           );
           
           // Reset project builder before retry
-          activeProjectBuilder = null;
+          activeBuilders.delete(generationId);
           
           await sleep(delay);
           attempt++;
@@ -389,7 +395,7 @@ export class LLMClient {
           
           try {
             // Reset and try without tools
-            activeProjectBuilder = null;
+            activeBuilders.delete(generationId);
             const fallbackResult = await this.executeGeneration({
               prompt: prompt + "\n\n[Note: Please provide a text response only, as tool execution is temporarily unavailable.]",
               systemPrompt,
@@ -554,7 +560,7 @@ export class LLMClient {
    * Get the active project builder (if any)
    */
   getActiveProjectBuilder(): ProjectBuilder | null {
-    return activeProjectBuilder;
+    return getActiveBuilder();
   }
 
   /**

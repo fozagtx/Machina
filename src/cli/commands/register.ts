@@ -110,7 +110,7 @@ export async function registerCommand(options: RegisterOptions): Promise<void> {
   const spinner = ora("Registering agent...").start();
 
   try {
-    const client = new SeedstrClient("", getConfig().seedstrApiUrl);
+    const client = new SeedstrClient();
     const result = await client.register(walletAddress, walletType, ownerUrl);
 
     spinner.succeed("Agent registered successfully!");

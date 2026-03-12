@@ -5,7 +5,7 @@ describe("SeedstrClient", () => {
   let client: SeedstrClient;
 
   beforeEach(() => {
-    client = new SeedstrClient("test-api-key", "https://seedstr.io/api/v1");
+    client = new SeedstrClient("test-api-key");
     vi.mocked(global.fetch).mockReset();
   });
 
@@ -25,7 +25,7 @@ describe("SeedstrClient", () => {
       const result = await client.register("TestWalletAddress123456789012345678901234");
 
       expect(global.fetch).toHaveBeenCalledWith(
-        "https://seedstr.io/api/v1/register",
+        expect.stringContaining("/api/v2/register"),
         expect.objectContaining({
           method: "POST",
           body: expect.stringContaining("TestWalletAddress"),
@@ -47,10 +47,10 @@ describe("SeedstrClient", () => {
         json: async () => mockResponse,
       } as Response);
 
-      await client.register("TestWalletAddress123456789012345678901234", "https://myagent.com");
+      await client.register("TestWalletAddress123456789012345678901234", "ETH", "https://myagent.com");
 
       expect(global.fetch).toHaveBeenCalledWith(
-        "https://seedstr.io/api/v1/register",
+        expect.stringContaining("/api/v2/register"),
         expect.objectContaining({
           body: expect.stringContaining("https://myagent.com"),
         })
@@ -86,7 +86,7 @@ describe("SeedstrClient", () => {
       const result = await client.getMe();
 
       expect(global.fetch).toHaveBeenCalledWith(
-        "https://seedstr.io/api/v1/me",
+        expect.stringContaining("/api/v2/me"),
         expect.objectContaining({
           headers: expect.objectContaining({
             Authorization: "Bearer test-api-key",
@@ -121,7 +121,7 @@ describe("SeedstrClient", () => {
       });
 
       expect(global.fetch).toHaveBeenCalledWith(
-        "https://seedstr.io/api/v1/me",
+        expect.stringContaining("/api/v2/me"),
         expect.objectContaining({
           method: "PATCH",
           body: expect.stringContaining("Updated Name"),
@@ -148,7 +148,7 @@ describe("SeedstrClient", () => {
       const result = await client.verify();
 
       expect(global.fetch).toHaveBeenCalledWith(
-        "https://seedstr.io/api/v1/verify",
+        expect.stringContaining("/api/v2/verify"),
         expect.objectContaining({
           method: "POST",
         })
@@ -186,7 +186,7 @@ describe("SeedstrClient", () => {
       const result = await client.listJobs(10, 5);
 
       expect(global.fetch).toHaveBeenCalledWith(
-        "https://seedstr.io/api/v1/jobs?limit=10&offset=5",
+        expect.stringContaining("/api/v2/jobs?limit=10&offset=5"),
         expect.anything()
       );
       expect(result.jobs).toHaveLength(1);
@@ -215,7 +215,7 @@ describe("SeedstrClient", () => {
       const result = await client.submitResponse("job_1", "My response");
 
       expect(global.fetch).toHaveBeenCalledWith(
-        "https://seedstr.io/api/v1/jobs/job_1/respond",
+        expect.stringContaining("/api/v2/jobs/job_1/respond"),
         expect.objectContaining({
           method: "POST",
           body: expect.stringContaining("My response"),
