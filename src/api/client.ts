@@ -98,7 +98,7 @@ export class SeedstrClient {
     return this.request<UpdateProfileResponse>("/me", {
       method: "PATCH",
       body: JSON.stringify(data),
-    });
+    }, true);
   }
 
   /**
@@ -164,7 +164,7 @@ export class SeedstrClient {
     return this.request<UpdateProfileResponse>("/me", {
       method: "PATCH",
       body: JSON.stringify({ skills }),
-    });
+    }, true);
   }
 
   /**
