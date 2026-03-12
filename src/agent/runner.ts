@@ -459,36 +459,52 @@ export class AgentRunner extends EventEmitter implements TypedEventEmitter {
 
 ## 🎨 DESIGN
 
-### For every web/UI project — build a Context Profile first:
+### ⛔ MANDATORY FOR EVERY WEBSITE, LANDING PAGE, TOOL, OR PRODUCT — NO EXCEPTIONS
 
-**Brand Identity** (infer from the job):
+Before writing a single line of HTML, you MUST define and then embed the following directly into the page copy and structure. This is not optional. Skipping this makes the output generic and worthless.
+
+---
+
+### STEP 1 — ICP (Ideal Customer Profile)
+Define who this page is built for. Be specific — vague ICPs produce vague copy.
+
+- **Who are they?** Job title, lifestyle, context (e.g. "solo founder running a SaaS, $0-$10k MRR, wears every hat")
+- **Primary pain** — the ONE thing keeping them up at night related to this product
+- **Primary desire** — what success looks like for them in one sentence
+- **Language they use** — casual/formal, technical/plain, aspirational/pragmatic — write in THEIR words, not yours
+- **What makes them click** — fear of missing out / social proof / results / simplicity / authority
+
+### STEP 2 — Page Copy Strategy (derived from the ICP)
+Every word on the page must be written FOR the ICP, not about the product.
+
+- **Hero headline** — speak directly to their primary desire or pain. Not "Welcome to X". Not the product name. Their outcome.
+- **Hero subheadline** — one sentence that bridges their pain to the solution. Specific. No buzzwords.
+- **Social proof framing** — what stat, quote, or result would make THIS ICP trust the product immediately?
+- **Feature copy** — each feature headline = a benefit in the ICP's language, not a technical descriptor
+- **CTA copy** — action-oriented, outcome-focused (e.g. "Start winning clients" not "Sign Up")
+- **Micro-copy** — button labels, form placeholders, tooltips must all feel native to the ICP's voice
+
+### STEP 3 — Brand Identity
 - Personality: bold & disruptive / warm & trustworthy / minimal & premium / playful & energetic
-- Color palette: choose 3 intentional hex values (primary, secondary, accent) that fit the brand
-- Typography: pair a display font + body font from Google Fonts — choose fonts that match the personality
+- Color palette: 3 intentional hex values (primary, secondary, accent) matching the brand personality
+- Typography: display font + body font from Google Fonts matching the personality
 - Aesthetic: glassmorphism / soft shadows / brutalist / organic — commit to one
 
-**ICP (Ideal Customer Profile)**:
-- Who is this for? Their role, desires, pain points, language
-- What motivates them to act?
+---
 
-**Copy Strategy**:
-- Brand voice in one phrase (e.g. "ambitious founder energy")
-- Value prop: one sentence, benefit-led
-- CTA style: direct / urgent / soft
-
-### Web project execution standards:
+### Web Execution Standards
 - Use Tailwind CSS (CDN) + custom CSS variables for the design system
 - Load Google Fonts via \`<link>\` in \`<head>\`
 - CSS custom properties: \`--color-primary\`, \`--color-secondary\`, \`--color-accent\`, \`--font-display\`, \`--font-body\`
 - Smooth micro-animations: \`transition-all duration-300\`, hover lifts (\`hover:-translate-y-1\`), fade-ins
 - Layout: CSS Grid for structure, Flexbox for alignment — never use tables for layout
 - Spacing: 8px base grid — use \`gap-2, gap-4, gap-8, gap-16\` consistently
-- Every section must have intentional visual weight — hero, social proof, features, CTA
+- Every section must have intentional visual weight — hero → social proof → features → CTA
 - Mobile-first. Test breakpoints: \`sm:\`, \`md:\`, \`lg:\`
 - Buttons: rounded, with shadow, hover state, and active press effect
 - Cards: subtle border, shadow-md, hover:shadow-xl transition
 - Images: use gradient placeholders or SVG illustrations — never broken \`<img>\` tags
-- Copy must speak the ICP's language — specific, evocative, zero filler text
+- **Every word of copy must speak the ICP's exact language — zero filler, zero generic text**
 
 ---
 

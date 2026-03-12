@@ -16,7 +16,7 @@ dotenvConfig();
 
 // Persistent config store for API keys and agent info
 export const configStore = new Conf<StoredConfig>({
-  projectName: "seed-agent",
+  projectName: "Machina",
   projectVersion: "2.0.0",
   schema: {
     seedstrApiKey: { type: "string" },
@@ -45,7 +45,10 @@ export function getConfig(): AgentConfig {
 
     // Wallet
     walletAddress:
-      process.env.WALLET_ADDRESS || process.env.SOLANA_WALLET_ADDRESS || stored.walletAddress || "",
+      process.env.WALLET_ADDRESS ||
+      process.env.SOLANA_WALLET_ADDRESS ||
+      stored.walletAddress ||
+      "",
     walletType:
       (process.env.WALLET_TYPE as WalletType) || stored.walletType || "ETH",
 
@@ -68,8 +71,10 @@ export function getConfig(): AgentConfig {
     },
 
     // Platform
-    seedstrApiUrl: process.env.SEEDSTR_API_URL || "https://www.seedstr.io/api/v1",
-    seedstrApiUrlV2: (process.env.SEEDSTR_API_URL || "https://www.seedstr.io/api/v2"),
+    seedstrApiUrl:
+      process.env.SEEDSTR_API_URL || "https://www.seedstr.io/api/v1",
+    seedstrApiUrlV2:
+      process.env.SEEDSTR_API_URL || "https://www.seedstr.io/api/v2",
 
     // WebSocket (Pusher)
     useWebSocket: process.env.USE_WEBSOCKET !== "false", // enabled by default
@@ -81,10 +86,20 @@ export function getConfig(): AgentConfig {
     debug: process.env.DEBUG === "true",
 
     // LLM retry settings (for recovering from transient tool argument parsing errors)
-    llmRetryMaxAttempts: parseInt(process.env.LLM_RETRY_MAX_ATTEMPTS || "3", 10),
-    llmRetryBaseDelayMs: parseInt(process.env.LLM_RETRY_BASE_DELAY_MS || "1000", 10),
-    llmRetryMaxDelayMs: parseInt(process.env.LLM_RETRY_MAX_DELAY_MS || "10000", 10),
-    llmRetryFallbackNoTools: process.env.LLM_RETRY_FALLBACK_NO_TOOLS !== "false",
+    llmRetryMaxAttempts: parseInt(
+      process.env.LLM_RETRY_MAX_ATTEMPTS || "3",
+      10,
+    ),
+    llmRetryBaseDelayMs: parseInt(
+      process.env.LLM_RETRY_BASE_DELAY_MS || "1000",
+      10,
+    ),
+    llmRetryMaxDelayMs: parseInt(
+      process.env.LLM_RETRY_MAX_DELAY_MS || "10000",
+      10,
+    ),
+    llmRetryFallbackNoTools:
+      process.env.LLM_RETRY_FALLBACK_NO_TOOLS !== "false",
   };
 }
 
@@ -116,7 +131,10 @@ export function isRegistered(): boolean {
  * Check if the agent is verified
  */
 export function isVerified(): boolean {
-  return process.env.AGENT_VERIFIED === "true" || configStore.get("isVerified") === true;
+  return (
+    process.env.AGENT_VERIFIED === "true" ||
+    configStore.get("isVerified") === true
+  );
 }
 
 /**
@@ -151,7 +169,8 @@ export function saveProfile(data: {
 }): void {
   if (data.name) configStore.set("name", data.name);
   if (data.bio) configStore.set("bio", data.bio);
-  if (data.profilePicture) configStore.set("profilePicture", data.profilePicture);
+  if (data.profilePicture)
+    configStore.set("profilePicture", data.profilePicture);
 }
 
 /**
