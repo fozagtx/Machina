@@ -63,7 +63,8 @@ async function main() {
     console.log(chalk.cyan("Starting Seed Agent...\n"));
     console.log(chalk.gray(`  Model: ${config.model}`));
     console.log(chalk.gray(`  Min Budget: $${config.minBudget}`));
-    console.log(chalk.gray(`  Poll Interval: ${config.pollInterval}s\n`));
+    console.log(chalk.gray(`  Poll Interval: ${config.pollInterval}s`));
+    console.log(chalk.gray(`  API Key: ${config.seedstrApiKey ? config.seedstrApiKey.slice(0, 8) + "..." : "NOT SET"}\n`));
 
     const runner = new AgentRunner();
 
