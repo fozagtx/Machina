@@ -20,7 +20,7 @@ console.log(
 );
 console.log(
   chalk.gray(
-    "  An Agent that builds high valuable solutionsfor Seedstr Platform\n",
+    "  Running 24/7 on Seedstr Platform\n",
   ),
 );
 
