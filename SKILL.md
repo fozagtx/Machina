@@ -12,78 +12,31 @@ Apply this skill for all jobs on the Seedstr platform. Machina excels at buildin
 
 ---
 
-## Job Acceptance Criteria
-
-| Condition | Action | Priority |
-|-----------|--------|----------|
-| budget >= $2.00 | ACCEPT | HIGH |
-| budget >= $0.50 | ACCEPT | MEDIUM |
-| budget < $0.50 | DECLINE | — |
-| prompt contains "illegal" OR "harm" OR "exploit" | DECLINE | — |
-| prompt contains "build" OR "create" OR "design" | ACCEPT | HIGH |
-| prompt contains "write" OR "tweet" OR "copy" OR "content" | ACCEPT | HIGH |
-| prompt contains "vsl" OR "video sales letter" OR "sales script" OR "voiceover" | ACCEPT | HIGH |
-| prompt contains "ugc" OR "ugc script" OR "creator script" OR "tiktok script" OR "ad script" | ACCEPT | HIGH |
-| prompt contains "translate" OR "rewrite" OR "edit" OR "improve" | ACCEPT | HIGH |
-| prompt contains "summarize" OR "summarise" OR "tldr" OR "summary" | ACCEPT | MEDIUM |
-| prompt contains "plan" OR "strategy" OR "roadmap" OR "outline" | ACCEPT | MEDIUM |
-| prompt contains "help" OR "how do I" OR "what is" OR "explain" | ACCEPT | MEDIUM |
-| prompt contains "image" OR "generate image" OR "draw" OR "illustration" | DECLINE | Outside scope |
-| prompt contains "code" OR "function" OR "algorithm" OR "debug" | ACCEPT | HIGH |
-| prompt contains "website" OR "landing page" OR "app" | ACCEPT | HIGH |
-| prompt contains "research" OR "analyze" OR "explain" | ACCEPT | MEDIUM |
-
-## Decision Logic
-
-```
-IF budget >= 0.50 AND
-   NOT contains_blocked_terms(prompt)
-THEN accept_job()
-ELSE decline_job(reason)
-```
+## Rules
+- [Job Filtering](skills/rules/job-filtering.md)
+- [API Integrations](skills/rules/api-integrations.md)
+- [Response Formats](skills/rules/response-formats.md)
+- [Domain Expertise](skills/rules/domain-specific.md)
 
 ---
 
-## External Data Sources
+## Quick Reference
 
-### Lookup Triggers
+### Job Acceptance
+- budget >= $0.50 AND no blocked terms → ACCEPT
+- budget < $0.50 OR blocked terms → DECLINE
 
-IF job.prompt CONTAINS "price|value|market cap|crypto|token|coin":
-  EXECUTE web_search("current " + extract_asset(prompt) + " price")
+### Blocked Terms
+illegal, harm, exploit, image generation, draw, illustration
 
-IF job.prompt CONTAINS "latest|current|today|news|recent|2024|2025|2026":
-  EXECUTE web_search(prompt)
+### Always Zip
+Every response is a `.zip` file — no plain text submissions.
 
-IF job.prompt CONTAINS "github|repository|repo|open source":
-  EXECUTE web_search(extract_repo_context(prompt))
+### High-Priority Keywords
+build, create, design, website, landing page, app, code, function,
+algorithm, debug, write, tweet, copy, content, vsl, ugc, translate,
+rewrite, edit, improve
 
----
-
-## Response Configuration
-
-### Quality Standards
-- ALL responses delivered as a .zip file — no exceptions
-- Minimum response content: complete, production-ready deliverable
-- Web projects: Tailwind CSS, Google Fonts, mobile-responsive, micro-animations
-- Code: verified with execute_code before submission
-- Copy/tweets: brand voice, ICP-aware, no filler text
-
-### Output Format by Job Type
-- **Build/Design** → index.html + assets + README.md in zip
-- **Code/Algorithm** → solution file + README.md in zip
-- **Copy/Tweet/Content** → response.md (+ design-notes.md if brand work) in zip
-- **Research/Analysis** → response.md with cited sources in zip
-- **Debug/Review** → fixed code + CHANGES.md in zip
-
-### Prohibited Content
-- No financial advice presented as fact
-- No harmful, illegal, or exploitative content
-- No incomplete implementations (no TODOs, no stubs)
-
----
-
-## Rules Directory
-- Job filtering: accept anything >= $0.50 that isn't harmful
-- Response format: always zip, always complete
-- Design standard: context profile (brand + ICP + copy strategy) before every creative job
-- Code standard: execute_code verification before every submission
+### Medium-Priority Keywords
+summarize, summarise, tldr, plan, strategy, roadmap, research, analyze,
+explain, help, how do I, what is
