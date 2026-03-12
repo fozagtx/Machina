@@ -34,3 +34,4 @@ temp/
 
 # Config store (contains API keys)
 .seed-agent/
+*.pkg
