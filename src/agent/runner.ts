@@ -491,8 +491,65 @@ Every word on the page must be written FOR the ICP, not about the product. Apply
 ### STEP 3 — Brand Identity
 - Personality: bold & disruptive / warm & trustworthy / minimal & premium / playful & energetic
 - Color palette: 3 intentional hex values (primary, secondary, accent) matching the brand personality
-- Typography: display font + body font from Google Fonts matching the personality
 - Aesthetic: glassmorphism / soft shadows / brutalist / organic — commit to one
+
+### STEP 3b — Typography (pick a pairing from this pre-stacked list — DO NOT search for fonts)
+
+**Bold & Disruptive** (startups, crypto, fintech, sports, streetwear)
+- Display: \`Bebas Neue\` | Body: \`Inter\`
+- Display: \`Oswald\` | Body: \`DM Sans\`
+- Display: \`Barlow Condensed\` | Body: \`Manrope\`
+- Display: \`Black Han Sans\` | Body: \`Nunito Sans\`
+
+**Minimal & Premium** (SaaS, agencies, portfolios, luxury tech)
+- Display: \`DM Serif Display\` | Body: \`DM Sans\`
+- Display: \`Cormorant Garamond\` | Body: \`Outfit\`
+- Display: \`Syne\` | Body: \`Inter\`
+- Display: \`Plus Jakarta Sans\` | Body: \`Inter\`
+
+**Warm & Trustworthy** (health, coaching, education, community)
+- Display: \`Merriweather\` | Body: \`Source Sans 3\`
+- Display: \`Lora\` | Body: \`Nunito\`
+- Display: \`Libre Baskerville\` | Body: \`Open Sans\`
+- Display: \`Playfair Display\` | Body: \`Lato\`
+
+**Playful & Energetic** (consumer apps, food, kids, lifestyle)
+- Display: \`Nunito\` | Body: \`Poppins\`
+- Display: \`Fredoka One\` | Body: \`Quicksand\`
+- Display: \`Pacifico\` | Body: \`Nunito\`
+- Display: \`Righteous\` | Body: \`DM Sans\`
+
+**Tech & Modern** (dev tools, AI, Web3, B2B SaaS)
+- Display: \`Space Grotesk\` | Body: \`Inter\`
+- Display: \`Space Mono\` | Body: \`Manrope\`
+- Display: \`JetBrains Mono\` | Body: \`Inter\`
+- Display: \`Fira Code\` | Body: \`DM Sans\`
+
+**Luxury & Elegant** (fashion, beauty, hospitality, premium brands)
+- Display: \`Cormorant\` | Body: \`Jost\`
+- Display: \`Bodoni Moda\` | Body: \`EB Garamond\`
+- Display: \`Italiana\` | Body: \`Raleway\`
+- Display: \`Tenor Sans\` | Body: \`Lato\`
+
+**Editorial / Magazine** (media, blogs, newsletters, journalism)
+- Display: \`Playfair Display\` | Body: \`Source Serif 4\`
+- Display: \`Libre Baskerville\` | Body: \`Lora\`
+- Display: \`Spectral\` | Body: \`Open Sans\`
+- Display: \`Abril Fatface\` | Body: \`Crimson Text\`
+
+**Load fonts like this in \`<head>\`:**
+\`\`\`html
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DISPLAY_FONT:wght@400;700;900&family=BODY_FONT:wght@400;500;600&display=swap" rel="stylesheet">
+\`\`\`
+Then in CSS:
+\`\`\`css
+:root {
+  --font-display: 'DISPLAY_FONT', sans-serif;
+  --font-body: 'BODY_FONT', sans-serif;
+}
+\`\`\`
 
 ---
 
